@@ -1,0 +1,96 @@
+ <!-- <?xml version="1.0" encoding="UTF-8"?> -->
+
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/mobile">
+ 
+ <f:view contentType="text/html" renderKitId="PRIMEFACES_MOBILE">
+
+    <pm:page title="Sterilink">
+        
+        <style>
+            .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+                min-height: 59px;
+                padding-left: 55px;
+            }            
+        </style>
+	
+        <pm:view id="principal" swatch="b">
+        <!-- Tronks - Visão principal. O atributo "swatch" indica o tema e pode ser  a, b, c, d ou e. -->
+        
+            <pm:header title="Sterilink"/>
+
+            <pm:content>
+                <h:form id="loginForm">                    
+                    <h:outputLabel for="username" value="Nome de usuário:" />                     
+                    <p:inputText value="${usuarioController.login}"   
+                    id="username" required="true"  />  
+              
+                    <h:outputLabel for="password" value="Password:" />  
+                    <h:inputSecret value="${usuarioController.password}"   
+                    id="password" required="true" label="password" /> 
+
+                    <p:separator />
+
+                    <p:commandButton id="loginButton" value="Login" icon="refresh" action="#{usuarioController.verificaLogin()}"
+                        oncomplete="dialogView"/>
+                        <!-- oncomplete="handleLoginRequest(xhr, status, args)"/> -->
+
+                </h:form>                     
+                 
+                                
+                <script type="text/javascript">  
+				    function handleLoginRequest(xhr, status, args) {  
+				        if(args.validationFailed || !args.loggedIn) {			            
+				        	//alert("O login falhou");				        	
+				        	PF('dlg1').show();
+				        }   
+				        else {			            
+				          alert("Logou com sucesso");
+				        }  
+				    }  
+				</script>
+						
+            </pm:content>
+           
+        </pm:view>
+		
+  </pm:page>
+    
+</f:view>
+</html> 
+
+
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sterilink</title>
+</h:head>
+
+<body>
+	<h1>Página de login</h1>
+
+	<h:form id="formLogin">
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Usuário:" />
+			<h:inputText type="text" name="login" value="${usuarioController.login}" />
+			<h:outputLabel value="Senha:" />
+			<h:inputSecret type="password" name="password" value="${usuarioController.password}" />
+			<h:commandButton value="Logar" action="#{usuarioController.verificaLogin()}" />
+			<h:commandLink value="Mudar Tela" action="falha" />
+		</h:panelGrid>
+	</h:form>
+</body>
+</html>  -->
+
+<!-- oncomplete="handleLoginRequest(xhr, status, args)"/> -->

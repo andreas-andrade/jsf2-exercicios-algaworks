@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<h:head>
+		<h:outputStylesheet name="bootstrap-theme.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="bootstrap.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="bootstrap.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="nav-livros.css" library="bootstrap/css"></h:outputStylesheet>
+	</h:head>
+
+<h:body>
+	<h1>Os livros cadastrados na biblioteca são:</h1>
+	
+	<div style="width: 500px;">
+		<h:dataTable value="#{cataloga.listaDeLivros}" var="livro" border="2" rendered="#{not empty cataloga.listaDeLivros}" styleClass="table table-bordered">
+			<h:column>
+				<f:facet name="header">Título</f:facet>
+				<h:outputText value="#{livro.titulo}"></h:outputText>
+			</h:column>	
+			<h:column>
+				<f:facet name="header">Autor(es)</f:facet>
+				<h:outputText value="#{livro.autores}"></h:outputText>
+			</h:column>	
+			<h:column>
+				<f:facet name="header">Assunto</f:facet>
+				<h:outputText value="#{livro.assunto}"></h:outputText>
+			</h:column>	
+		</h:dataTable>
+	</div>
+	
+	<h:form>
+	<h2>Escolha o livro para resreva: </h2>
+	<div>
+		<h:selectOneRadio value="#{cataloga.livro}" layout="pageDirection">
+			<f:selectItems value="#{cataloga.listaDeLivros}" var="livro" itemValue="#{livro.titulo}" itemLabel="#{livro.titulo}"></f:selectItems>
+		</h:selectOneRadio>
+		<h:commandButton value="Reservar Livro"></h:commandButton>
+	</div>
+		
+		<br />
+		<br />
+		<div>
+			<ui:repeat var="livro" value="#{cataloga.livro}">
+				<h:outputText value="Livro reservado: #{livro}"></h:outputText>
+			</ui:repeat>
+		</div>
+		
+		<hr />
+		<h:commandLink value="Cadastrar Livros" action="CatalogoLivros" styleClass="btn btn-primary"></h:commandLink>
+	</h:form>
+</h:body>
+</html>

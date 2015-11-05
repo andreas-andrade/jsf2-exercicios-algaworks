@@ -1,0 +1,135 @@
+{% if not exame_publicado %}	
+	<br />Este exame ainda não foi publicado
+{%else%}
+	<link type="text/css" rel="stylesheet" href="/cines/css/sofexVideoPlayer.css"/>
+	<script type="text/javascript" src="/cines/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/cines/js/sofexVideoPlayer.js"></script>		
+	<script type="text/javascript" src="/cines/js/jquery-1.8.2.min.js"></script>
+	<link href="/cines/js/lightbox/css/lightbox.css" rel="stylesheet" />
+	<script type="text/javascript" src="/cines/js/lightbox/js/lightbox.js"></script>
+	<div>
+		<!--<div id="merchandising">		
+		</div>
+		
+		<div id="nome">
+			Ubaldo Henrique Mattos
+		</div> -->
+		
+		<div id="informacoes">
+			<table>
+				<tr>				
+					<td class="textoADireitaEEmNegrito">Sexo:</td>
+					<td class="textoAEsquerda">{% if exame.visita.paciente.genero == "F" %}Feminino{% elif exame.visita.paciente.genero == "M" %}Masculino{%else%}Outro{%endif%}&nbsp;&nbsp;&nbsp;</td>
+					<td class="textoADireitaEEmNegrito">Idade:</td>
+					<td class="textoAEsquerda">{% if exame.idade %}{{exame.idade}}{%else%}Não informado{%endif%}&nbsp;&nbsp;&nbsp;</td>
+					{% if laudo %}<td><a id="laudo" class="textoEmNegrito" href="/laudos/{{exame.exauid}}/index.htm" target="_self">Laudo</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>{%endif%}
+					<td><a id="info"  class="textoEmNegrito" href="#" onclick="visualizarInformacoes('Dados do Exame')">+Dados do Exame</a></td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="maisInformacoes">
+			<table>
+				<tr>
+					<td class="textoADireitaEEmNegrito">Médico Responsável:</td>
+					<td class="textoAEsquerda">{% if exame.visita.agendamento.medico %}{{exame.visita.agendamento.medico}}{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Peso (Kg):</td>
+					<td class="textoAEsquerda">{% if exame.peso %}{{exame.peso}}&nbsp;Kg{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Complemento:</td>
+					<td class="textoAEsquerda">{% if exame.accnum %}{{exame.accnum}}{%else%}Não informado{%endif%}</td>
+				</tr>
+				<tr> 
+					<td class="textoADireitaEEmNegrito">ID do Paciente:</td>
+					<td class="textoAEsquerda">{% if exame.visita.paciente.prontuario %}{{exame.visita.paciente.prontuario}}{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Altura (m):</td>
+					<td class="textoAEsquerda">{% if exame.altura %}{{exame.altura}}&nbsp;m{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Status:</td>
+					<td class="textoAEsquerda">{% if exame.visita.status %}{{exame.visita.status}}{%else%}Não informado{%endif%}</td>
+				</tr>
+				<tr> 
+					<td class="textoADireitaEEmNegrito">Médico Solicitante:</td>
+					<td class="textoAEsquerda">{% if exame.medico_solicitante %}{{exame.medico_solicitante}}{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Descrição de Exame:</td>
+					<td class="textoAEsquerda">{% if exame.visita.tipo_de_exame %}{{exame.visita.tipo_de_exame}}{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Modality:</td>
+					<td class="textoAEsquerda">{% if exame.equipamento_codequ.modnam %}{{exame.equipamento_codequ.modnam}}{%else%}Não informado{%endif%}</td>
+				</tr>
+				<tr> 
+					<td class="textoADireitaEEmNegrito">Agendamento relacionado:</td>
+					<td class="textoAEsquerda">{% if exame.visita.agendamento.data_do_inicio %}{{exame.visita.agendamento.data_do_inicio}}{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">ID do Exame:</td>
+					<td class="textoAEsquerda">{% if exame.exaid %}{{exame.exaid}}{%else%}Não informado{%endif%}</td>
+					<td class="textoADireitaEEmNegrito">Nome do Convênio:</td>
+					<td class="textoAEsquerda">{% if exame.visita.convenio.nome %}{{exame.visita.convenio.nome}}{%else%}Não informado{%endif%}</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="divTabela">						
+			<div id="celulaEsquerda">
+				<div id="numeroDaCena">				
+				</div>
+				<div id="videoHolder" style="width=512px;height=512px;" >				
+					<video class="AspectRatio" id="videoAtual" width="512" height="512" autoplay loop muted>						
+						<source src="/cines/{{exame.exauid}}/{{primeiro}}.mp4"  type='video/mp4'>			
+					</video>
+				</div>		
+				
+				<div id="controles">
+					<form>
+						<input id="minus1"		class="botaoControle" type="button" value="<"	 	 onclick="seekFrames(-1, 15);">		
+						<input id="acionapause"	class="botaoControle" type="button" value="Pause" 	 >
+						<input id="acionaplay"	class="botaoControle" type="button" value="Play"	 >
+						<input id="plus1"		class="botaoControle" type="button" value=">"	 	 onclick="seekFrames(1, 15);">
+						<!--<input id="fullscreen"	class="botaoControle" type="button" value="FS"	 	 >-->
+						<input id="filtros"		class="botaoControle" type="button" value="Filtros"  >
+						
+						<div id="analise">					
+							<fieldset>
+								<legend class="legenda">Filtros</legend>																
+									<div id="controleBrilho" class="sliderFiltro">
+										<label>Brilho:&nbsp;</label><label id="valorBrilho">0</label><br />
+										<input type="range" id="sliderBrilho" 	 name="sliderBrilho" 	min="0" max="150" step ="1" value="50">
+									</div>
+									<div id="controleContraste" class="sliderFiltro">
+										<label>Contraste:&nbsp;</label><label id="valorContraste">0</label><br />
+										<input type="range" id="sliderContraste" name="sliderContraste" min="0" max="150" step ="1" value="50">								
+									</div>								
+									<div id="controleRetorno">
+										<input id="reset"		  class="botaoAnalise" type="button" value="Reset" >														
+									</div>								
+							</fieldset>
+						</div>					
+					</form>
+				</div>			
+			</div>
+					
+			<div id="celulaDireita">		
+				<table id="menu">
+					<tr>
+						{% for image in lista_de_arquivos %}
+							<td class="icone"> 
+								Cena {{forloop.counter}}
+								<a href="#" id="link{{forloop.counter}}" onclick="atualizaFilme('/cines/{{exame.exauid}}/{{image}}','{{forloop.counter}}')"><img src="/cines/{{exame.exauid}}/{{image}}.jpg" alt="cine{{forloop.counter}}" /></a>
+								<label class="linkDownload">Download: <a  href="/cines/{{exame.exauid}}/{{image}}.mp4" download="{{image}}" >LowRes</a> HighRes</label>
+							</td>
+							{% if forloop.counter|divisibleby:"3" %}<tr></tr>{%endif%}
+						{% endfor %}			
+				</table>			
+			</div>	
+			
+			<!--<div id="downloadDeTodoOExame">		
+				<a href="#" onclick="downloadExame()">Fazer o download de todo o exame, incluindo o laudo</a> 							
+			</div>
+				
+			<div id="aviso">
+				IMAGES FOR VISUALIZATION PURPOSES ONLY
+			</div>				
+			
+			<div id="atalhos">		
+				<a href="/cines/img/keyboard.png" class="lightbox[roadtrip0]" title="Atalhos de teclado"><img alt="Atalhos" src="/cines/img/keybpeq.png" height="50" /></a>
+			</div>	-->		
+		</div>		
+		
+	</div>	
+{%endif%}

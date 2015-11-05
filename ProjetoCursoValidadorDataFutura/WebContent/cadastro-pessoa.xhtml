@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<title>Lançamentos</title>
+		
+		<h:outputStylesheet library="css" name="sistema.css"/>
+		<h:outputStylesheet library="css" name="consulta-lancamentos.css"/>
+		<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
+		
+		
+		<h:outputStylesheet name="bootstrap-theme.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="bootstrap.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="bootstrap.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="nav-livros.css" library="bootstrap/css"></h:outputStylesheet>
+	</h:head>
+	<h:body>
+		<div class="container">
+			<h:form role="form">
+				<div class="form-group">
+					<h1>Cadastro de Pessoas</h1>
+					<h:commandButton value="Nova" class="btn btn-primary"></h:commandButton>			
+					<h:commandButton value="Consulta" class="btn btn-primary"></h:commandButton>
+				</div>
+				<h:panelGrid columns="2" styleClass="table">
+					<f:facet name="header">Preencha o formulário abaixo</f:facet>
+					<h:outputLabel value="Nome:"/>
+					<h:inputText size="60"></h:inputText>
+					
+					<h:outputLabel value="Tipo:"></h:outputLabel>
+					<h:panelGroup>
+						<h:selectOneRadio>
+							<f:selectItem itemValue="F" itemLabel="Física"></f:selectItem>
+							<f:selectItem itemValue="J" itemLabel="Jurídica"></f:selectItem>
+						</h:selectOneRadio>
+					</h:panelGroup>
+					
+					<h:outputLabel value="E-mail:"/>
+					<h:inputText size="60"></h:inputText>
+					
+					<h:outputLabel value="Data de nascimento:"/>
+					<h:inputText type="date"></h:inputText>
+					
+					<h:outputLabel value="Ramo de atividade:"/>
+					<h:selectOneMenu>
+						<f:selectItem itemLabel="Consultoria"></f:selectItem>
+						<f:selectItem itemLabel="Consultoria"></f:selectItem>
+						<f:selectItem itemLabel="Consultoria"></f:selectItem>
+						<f:selectItem itemLabel="Consultoria"></f:selectItem>
+						<f:selectItem itemLabel="Consultoria"></f:selectItem>
+					</h:selectOneMenu>
+					<h:outputLabel></h:outputLabel>
+					<h:commandButton styleClass="btn btn-success" value="Cadastrar"></h:commandButton>
+				</h:panelGrid>	
+			</h:form>
+		</div>
+	</h:body>
+</html>

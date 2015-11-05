@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  !DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd"-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    
+<!-- Beans do cliente remoto do Sterilink -->
+<!-- beans-->
+    <!-- Configuração do cliente no arquivo iwg2client.properties -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>${user.dir}\SterilinkClient.properties</value>
+        </property>
+    </bean>
+    <!-- bean id="loginService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://${sterilinkHTTPServerAddress}:${sterilinkHTTPServerPort}/sterilink/login.service</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.sofex.controle.IControleLogin</value>
+        </property>
+    </bean -->
+    <bean id="cadastroService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://${sterilinkHTTPServerAddress}:${sterilinkHTTPServerPort}/sterilink/cadastro.service</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.sofex.controle.IControleCadastro</value>
+        </property>
+    </bean>
+    <bean id="pesquisaService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://${sterilinkHTTPServerAddress}:${sterilinkHTTPServerPort}/sterilink/pesquisa.service</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.sofex.controle.IControlePesquisa</value>
+        </property>
+    </bean>
+</beans>

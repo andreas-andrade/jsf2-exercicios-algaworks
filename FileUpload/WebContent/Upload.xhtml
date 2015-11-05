@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h= "http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f= "http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	<head jsf:id="head">
+		<title>Upload de Arquivos</title>
+	</head>
+	<h:body>
+		<h:form enctype="multipart/form-data">
+			<h:messages></h:messages>
+			
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Descrição"></h:outputLabel>
+				<h:inputText required="true" requiredMessage="Descrição é obrigatória." value="#{uploadBean.descricao}"></h:inputText>
+				
+				<h:outputLabel value="Arquivo"></h:outputLabel>
+				<h:inputFile required="true" requiredMessage="O arquivo é obrigatório." value="#{uploadBean.arquivo}"/>
+				
+				<h:outputLabel />
+				<h:commandButton value="Enviar" action="#{uploadBean.enviar}"/>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+
+</html>
+	

@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+	<h:head>
+		<title>Cadastro de jogo</title>
+	</h:head>
+	
+	<h:body>
+		<h1>Registrar Partida</h1>
+		<h:form>
+		<h:messages></h:messages>
+			<h:panelGrid columns="2">
+				<f:facet name="header">Entre com os dados da partida</f:facet>
+				
+				
+				<h:outputLabel value="Data do Jogo"></h:outputLabel>
+				<h:panelGroup>
+					<h:inputText value="#{registroPartidaBean.partida.dataDaPartida}" required="true" id="dataPartida" label="Data do Jogo"> 
+						<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						<f:validator validatorId="com.algaworks.DataValidator"></f:validator>
+					</h:inputText>
+					<h:message for="dataPartida" showDetail="true"></h:message>
+				</h:panelGroup>
+				
+				<h:outputLabel value="Time da Casa"></h:outputLabel>
+				<h:panelGroup>
+					<h:inputText value="#{registroPartidaBean.partida.nomeTimeDaCasa}" required="true" id="nomeTCasa" label="Time da Casa">
+						<f:validateLength minimum="5"></f:validateLength>
+					</h:inputText>
+					<h:message for="nomeTCasa" showDetail="true"></h:message>
+				</h:panelGroup>
+				
+				<h:outputLabel value="Gols marcados pelo time da casa"></h:outputLabel>
+				<h:panelGroup>
+					<h:inputText value="#{registroPartidaBean.partida.golsMarcadosPeloTimeDaCasa}" required="true" id="golsTCasa" label="Gols marcados">
+						<f:validateDoubleRange minimum="0" maximum="99"></f:validateDoubleRange>
+					</h:inputText>
+					<h:message for="golsTCasa" showDetail="true"></h:message>
+				</h:panelGroup>
+				
+				
+				<h:outputLabel value="Time Visitante"></h:outputLabel>
+				<h:panelGroup>
+					<h:inputText value="#{registroPartidaBean.partida.nomeDoVisitante}" required="true" id="nomeTVisitante" label="Time Visitante">
+						<f:validateLength minimum="5"></f:validateLength>
+					</h:inputText>
+					<h:message for="nomeTVisitante" showDetail="true"></h:message>
+				</h:panelGroup>
+				
+				
+				<h:outputLabel value="Gols marcados pelo time visitante"></h:outputLabel>
+				<h:panelGroup>
+					<h:inputText value="#{registroPartidaBean.partida.golsMarcadosPeloVisitante}" required="true" id="golsTVisitante" label="Gols marcados">
+						<f:validateDoubleRange minimum="0" maximum="99"></f:validateDoubleRange>
+					</h:inputText>
+					<h:message for="golsTVisitante" showDetail="true"></h:message>
+				</h:panelGroup>
+				
+				<h:outputLabel value="Valor arrecadado"></h:outputLabel>
+				<h:panelGroup>
+					<h:inputText value="#{registroPartidaBean.partida.valorArrecadado}" required="true" id="valorArrec" label="Valor arrecadado">
+						<!-- <f:convertNumber locale="pt_BR" minFractionDigits="2"></f:convertNumber>
+						<f:validateDoubleRange minimum="0"></f:validateDoubleRange>
+						<f:convertNumber minFractionDigits="2" locale="pt_BR"></f:convertNumber> -->
+						<f:converter converterId="com.algaworks.Valor"></f:converter>
+					</h:inputText>
+					<h:message for="valorArrec" showDetail="true"></h:message>
+				</h:panelGroup>
+			<h:outputLabel></h:outputLabel>
+			<h:panelGroup>
+				<h:commandButton value="Cadastrar" action="#{registroPartidaBean.incluirPartida}"></h:commandButton>
+				<h:commandButton value="Limpar Tabela" action="#{registroPartidaBean.limpar}" immediate="true"></h:commandButton>
+			</h:panelGroup>
+		</h:panelGrid>
+			
+			<hr />
+			
+			<h2>Partidas jogadas até o momento:</h2>
+			
+			<h:dataTable value="#{registroPartidaBean.listaDePartidas}" var="partida" border="1">
+				<h:column>
+					<f:facet name="header">Data do Jogo</f:facet>
+					<h:outputText value="#{partida.dataDaPartida}">
+						<f:convertDateTime pattern="dd MMMM yyyy" locale="pt_BR"></f:convertDateTime>
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Time da Casa</f:facet>
+					<h:outputText value="#{partida.nomeTimeDaCasa}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Gols marcados</f:facet>
+					<h:outputText value="#{partida.golsMarcadosPeloTimeDaCasa}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Time Visitante</f:facet>
+					<h:outputText value="#{partida.nomeDoVisitante}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Gols marcados</f:facet>
+					<h:outputText value="#{partida.golsMarcadosPeloTimeDaCasa}"></h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Arrecadação</f:facet>
+					<h:outputText value="#{partida.valorArrecadado}"></h:outputText>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</h:body>
+</html>

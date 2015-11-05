@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	<h:head>
+		<title>Escopos de Aplicação e Sessão</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</h:head> 
+	<h:body> 
+		<h:form>
+			<p><h:commandLink action="#{gestaoProdutosBean.obterAjuda()}" value="Ajuda" /></p>
+			<hr />
+			<h1>Cadastro de Produtos</h1>
+			<p>Nome
+				<h:inputText value="#{gestaoProdutosBean.produto.nome}"/>
+			</p>
+			<p>Fabricante
+				<h:inputText value="#{gestaoProdutosBean.produto.fabricante}" />
+			</p>
+			<p>Categoria
+				<h:inputText value="#{gestaoProdutosBean.produto.categoria}"/>
+			</p>
+			<h:commandButton action="#{gestaoProdutosBean.incluir}" value="Incluir" />
+			<ol>
+				<ui:repeat var="item" value="#{gestaoProdutosBean.listaDeProdutos}">
+					<li>#{item.nome} - #{item.fabricante} - #{item.categoria}</li>
+				</ui:repeat>
+			</ol>
+		</h:form>
+	</h:body> 
+</html>

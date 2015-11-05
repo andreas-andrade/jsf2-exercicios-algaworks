@@ -1,0 +1,50 @@
+<ui:composition template="/template/Base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:qw="http://java.sun.com/jsf/composite/componentes">
+	<ui:define name="titulo">
+			<title>Pessoas</title>
+		</ui:define>
+	<ui:define name="conteudo">
+	
+		<h1>#{msg.people}</h1>
+			<h:form>
+				<h:messages showDetail="false" showSummary="true" styleClass="form-messages" errorClass="list-group-item list-group-item-danger" infoClass="info" />
+				<h:button styleClass="btn btn-primary" value="#{msg.new_people}" outcome="cadastro-pessoa" rendered="#{request.isUserInRole('cadastro')}"></h:button>
+				<h:dataTable var="pessoa" value="#{consultaPessoasBean.pessoas}" rendered="#{not empty consultaPessoasBean.pessoas}" styleClass="table table-bordered">
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText value="#{pessoa.nome}"></h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Tipo</f:facet>
+						<h:outputText value="#{pessoa.tipo.tipo}"></h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Ramo da Atividade</f:facet>
+						<h:outputText value="#{pessoa.ramoDeAtividade.descricao}"></h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Data de Nascimento</f:facet>
+						<!-- <h:outputText value="#{pessoa.dataDeNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+						</h:outputText> -->
+						<qw:outputDate pessoaBean="#{pessoa}" pattern="dd 'de' MMMM 'de' yyyy"></qw:outputDate>
+					</h:column>
+					<h:column rendered="#{request.isUserInRole('cadastro')}">
+						<h:link outcome="cadastro-pessoa">
+							<h:graphicImage value="/imagens/editar.png"></h:graphicImage>
+							<f:param value="#{pessoa.codigo}" name="codigo" ></f:param>
+						</h:link>
+						<h:commandLink action="#{consultaPessoasBean.excluir}">
+							<h:graphicImage value="/imagens/excluir.png"></h:graphicImage>
+							<f:setPropertyActionListener value="#{pessoa}" target="#{consultaPessoasBean.pessoaSelecionada}"></f:setPropertyActionListener>
+							<f:ajax render="@form"></f:ajax>
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+	</ui:define>
+</ui:composition>

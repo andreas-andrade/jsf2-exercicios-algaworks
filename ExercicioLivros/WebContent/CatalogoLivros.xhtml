@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+>
+	<h:head>
+		<title>Cadastro de Livros</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<h:outputStylesheet name="bootstrap-theme.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="bootstrap.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="bootstrap.min.css" library="bootstrap/css"></h:outputStylesheet>
+		<h:outputStylesheet name="nav-livros.css" library="bootstrap/css"></h:outputStylesheet>
+	</h:head> 
+	<h:body>
+	<div class="container">
+		<h:form id="form">
+			<div class="masthead">
+		        <h3 class="text-muted">Catálogo de Livros</h3>
+		        <ul class="nav nav-justified">
+		          <li class="active"><h:commandLink action="home?faces-redirect=true" value="Página Inicial" /></li>
+		          <li><h:commandLink action="#{cataloga.obterAjuda}" value="Ajuda"> 
+						<f:actionListener binding="#{registroCliqueBotaoListener}"></f:actionListener>
+					  </h:commandLink>
+				  </li>
+		          <li class="active"><h:commandLink action="reservar-livros?faces-redirect=true" value="Reservar Livros" /></li>
+		        </ul>
+	   		</div>
+			
+			<div> 
+			
+				<h:panelGroup styleClass="alert alert-danger" role="alert" layout="block" style="width: 500px;" >
+					<h:messages layout="list" globalOnly="true"/>		
+				</h:panelGroup>
+			
+				<h1>Catalogação de Livros</h1>
+				<hr />
+				<div class="form-group">
+					<h:panelGrid columns="2">
+					<f:facet name="header">Insira os Dados Necessários:</f:facet>
+					<h:outputLabel /><h:outputLabel />
+							<h:outputLabel value="Título do Livro: "/>  
+							<h:panelGroup>
+								<h:inputText value="#{cataloga.livros.titulo}" styleClass="" id="titulo"/>
+								<h:message for="titulo" styleClass="alert alert-danger" role="alert"></h:message>
+							</h:panelGroup>
+							
+							<h:outputLabel value="Autores: "/>
+							<h:panelGroup> 
+								<h:inputText value="#{cataloga.livros.autores}" id="autores"/>
+								<h:message for="autores" styleClass="alert alert-danger" role="alert"></h:message>
+							</h:panelGroup>
+						
+							<h:outputLabel value="Assunto:"/>
+							<h:panelGroup>  
+								<h:inputText value="#{cataloga.livros.assunto}" id="assunto" />
+								<h:message for="assunto" styleClass="alert alert-warning"></h:message>
+							</h:panelGroup>
+							<h:outputLabel /><h:outputLabel />
+							<h:outputLabel />
+							<h:panelGroup>
+								<h:commandButton action="#{cataloga.incluirLivro}" value="Salvar Livro" styleClass="btn btn-primary" />
+							</h:panelGroup>
+							<h:outputText value="" binding="#{cataloga.msgSucesso}" />
+					</h:panelGrid>
+				</div>
+				
+				<hr />
+				
+				<h2>Lista de Livros Cadastrados</h2>
+				
+				<ol>
+					<ui:repeat var="item" value="#{cataloga.listaDeLivros}">
+						<li>
+							<b>Título: </b>#{item.titulo} - <b>Autor(res)</b>: #{item.autores} - <b>Assunto: </b> #{item.assunto}
+							<h:graphicImage value="/imagens/book_icon.png"></h:graphicImage>
+							<h:commandButton value="Excluir Livro" action="#{cataloga.excluir}" styleClass="btn btn-danger btn-sm">
+								<f:setPropertyActionListener target="#{cataloga.livroSelecionado}" value="#{item}"></f:setPropertyActionListener>
+								<!-- <f:actionListener binding="#{registroCliqueBotaoListener}"/> -->
+							</h:commandButton>
+						</li>
+					</ui:repeat>
+				</ol>
+			</div> 
+		</h:form>
+		<hr />
+		<h:form>
+			<h2>Pesquisar Livros</h2>
+			<p>Digite o título do livro: 
+				<h:inputText value="#{cataloga.livroPesquisa}" valueChangeListener="#{cataloga.buscarLivros}" onchange="submit()" />
+			</p>
+			<ol>
+				<ui:repeat var="item" value="#{cataloga.listaDeLivrosPesquisados}">
+					<li>
+						<b>Título: </b>#{item.titulo} - <b>Autor(res)</b>: #{item.autores} - <b>Assunto: </b> #{item.assunto}
+					</li>
+				</ui:repeat>
+			</ol>
+			<hr />
+		</h:form>
+		<h:form>
+					
+			<h1>Caixas de Seleção.</h1>
+
+			<h:selectManyListbox value="#{cataloga.listaDeLivrosSelecionados}" rendered="#{not empty cataloga.listaDeLivros}" styleClass="form-control">
+				<f:selectItems value="#{cataloga.listaDeLivros}" var="livro" itemValue="#{livro.titulo}" itemLabel="#{livro.titulo}"></f:selectItems>
+				<!-- <f:selectItem itemValue="livro 123" itemLabel="livro 123"></f:selectItem> -->
+			</h:selectManyListbox>
+			<br />
+			<br />
+			<h:commandButton value="Listar Livros Escolhidos" action="#{cataloga.escolher}" styleClass="btn btn-info"/>
+			
+			
+			<ui:repeat value="#{cataloga.listaDeLivrosSelecionados}" var="livro" >
+				<h3>Livros Escolhidos: #{livro}</h3>
+			</ui:repeat>
+		
+		</h:form>
+		<!-- JAVASCRIPTS -->
+	</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<h:outputScript name="bootstrap.min.js" library="bootstrap/js"></h:outputScript>
+	</h:body>
+</html>

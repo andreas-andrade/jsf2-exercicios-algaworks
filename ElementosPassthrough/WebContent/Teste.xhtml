@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h= "http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f= "http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	<head jsf:id="head">
+		<title>Testando Elementos Pass-through</title>
+	</head>
+	<body jsf:id="body">
+		<form jsf:id="form" jsf:prependId="false">
+			<input type="text" placeholder="Digite um texto" jsf:value="#{testeBean.texto}" />
+			
+			<br />
+			<br />
+			<h:outputText value="#{testeBean.texto}"></h:outputText>
+			<br />
+			<br />
+			<input type="color" jsf:value="#{testeBean.cor}" jsf:id="cor" onchange="jsf.ajax.request(this, event, {execute: '@form', render:'@form'})">
+				
+			</input>
+			<br />
+			<br />
+			<div style="height: 80px; background-color: #{testeBean.cor}" jsf:id="div-cor"></div>
+			<br />
+			<br />
+			<button value="Mudar Cor" jsf:action="#{testeBean.exibir}">
+				Mudar Cor
+				<f:ajax execute="@form" render="div-cor"></f:ajax>
+			</button>
+		</form>
+	</body>
+</html>
+	

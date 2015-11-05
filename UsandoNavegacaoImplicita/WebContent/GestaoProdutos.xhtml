@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	<h:head>
+		<title>Escopos de Aplicação e Sessão</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</h:head> 
+	<h:body> 
+		<h:form>
+			<p><h:commandLink action="#{gestaoProdutosBean.obterAjuda()}" value="Ajuda">
+				<f:actionListener binding="#{registroCliqueBotaoListener}"></f:actionListener>
+			</h:commandLink></p>
+			<hr />
+			<h1>Cadastro de Produtos</h1>
+			<p>Nome
+				<h:inputText value="#{gestaoProdutosBean.produto.nome}"/>
+			</p>
+			<p>Fabricante
+				<h:inputText value="#{gestaoProdutosBean.produto.fabricante}" />
+			</p>
+			<p>Categoria
+				<h:inputText value="#{gestaoProdutosBean.produto.categoria}"/>
+			</p>
+			
+			<h:commandButton action="#{gestaoProdutosBean.incluir}" value="Incluir" actionListener="#{gestaoProdutosBean.verificarInclusao}">
+				<f:actionListener binding="#{registroCliqueBotaoListener}"></f:actionListener>
+			</h:commandButton>
+			
+			<ol>
+				<ui:repeat var="item" value="#{gestaoProdutosBean.listaDeProdutos}">
+					<li>
+						#{item.nome} - #{item.fabricante} - #{item.categoria}
+						<h:commandButton value="Excluir" action="#{gestaoProdutosBean.excluir}">
+							<f:setPropertyActionListener target="#{gestaoProdutosBean.produtoSelecionado}" value="#{item}"></f:setPropertyActionListener>
+							<f:actionListener binding="#{registroCliqueBotaoListener}"></f:actionListener>
+						</h:commandButton>
+					</li>
+				</ui:repeat>
+			</ol>
+		</h:form>
+		<hr />
+		<h2>Pesquisa de produtos.</h2>
+		<p>Digite o nome do fabricante: 
+			<h:inputText value="" />
+		</p>
+		<h:commandButton value="Pesquisar" />
+	</h:body> 
+</html>

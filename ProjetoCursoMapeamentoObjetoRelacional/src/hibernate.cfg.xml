@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost/cursojsf</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password"></property>
+
+		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>		
+		<!-- O parâmetro abaixo mostra os comandos SQL gerados pelo hibernate no console. Usar somente em amb. de desenvolvimento -->
+		<property name="show_sql">true</property>
+		<!-- O paramatro abaixo identa o sql mostrado no console -->
+		<property name="format_sql">true</property>
+		
+		<mapping class="com.algaworks.cursojsf2.financeiro.model.Lancamento"/>
+		<mapping class="com.algaworks.cursojsf2.financeiro.model.Pessoa"/>
+		<mapping class="com.algaworks.cursojsf2.financeiro.model.RamoAtividade"/>
+	</session-factory>
+</hibernate-configuration>

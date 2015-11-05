@@ -1,0 +1,62 @@
+<ui:composition template="/template/Base.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+	
+	<f:metadata>
+		<f:viewParam name="codigo" value="#{cadastroPessoaBean.pessoa}"></f:viewParam>
+	</f:metadata>
+	<ui:define name="titulo">
+		<title>#{cadastroPessoaBean.editando ? msg.edit_people : msg.new_people}</title>
+	</ui:define>
+	<ui:define name="conteudo">
+	
+			<h:form role="form" id="frm">
+				
+				<h:messages showDetail="false" showSummary="true" styleClass="form-messages" errorClass="list-group-item list-group-item-danger" infoClass="info" />
+				<div class="form-group">
+					<h1>#{cadastroPessoaBean.editando ? msg.edit_people : msg.new_people}</h1>
+					<h:button outcome="consulta-pessoas" styleClass="btn btn-primary" value="#{msg.list_people}"></h:button>
+				</div>
+				<h:panelGrid columns="2" styleClass="table" id="panel">
+					<f:facet name="header">#{msg.fill_form}</f:facet>
+					
+					<h:outputLabel value="#{msg.name}:"/>
+					<h:inputText size="60" required="true" label="Nome" value="#{cadastroPessoaBean.pessoa.nome}"></h:inputText>
+					
+					<h:outputLabel value="#{msg.type}:"></h:outputLabel>
+					<h:panelGroup>
+						<h:selectOneRadio value="#{cadastroPessoaBean.pessoa.tipo}" required="true" label="Tipo" valueChangeListener="#{cadastroPessoaBean.tipoListener}"
+						 onchange="jsf.ajax.request(this, event, {execute: '@form', render:'frm:panel'})" immediate="true">
+							<f:selectItems value="#{cadastroPessoaBean.tiposDePessoa}" var="tipoDePessoa" itemValue="#{tipoDePessoa}"
+							itemLabel="#{tipoDePessoa.tipo}" ></f:selectItems>
+						</h:selectOneRadio>
+					</h:panelGroup>
+					
+					<h:outputLabel value="E-mail:"/>
+					<h:inputText required="true" label="E-mail" value="#{cadastroPessoaBean.pessoa.email}">
+						<f:validator validatorId="com.algaworks.EmailValidator"></f:validator>
+					</h:inputText>
+					
+					<h:outputLabel value="#{msg.actuation}" rendered="#{cadastroPessoaBean.pessoa.tipo eq 'JURIDICA'}"></h:outputLabel>
+					<h:selectOneMenu value="#{cadastroPessoaBean.pessoa.ramoDeAtividade}" label="Ramo de Atividade" rendered="#{cadastroPessoaBean.pessoa.tipo eq 'JURIDICA'}">
+						<f:selectItem itemLabel="Selecione..." noSelectionOption="true"></f:selectItem>
+						<f:selectItems var="ramoDeAtividade" value="#{cadastroPessoaBean.ramosDeAtividade}" itemLabel="#{ramoDeAtividade.descricao}" 
+						itemValue="#{ramoDeAtividade}"></f:selectItems>
+					</h:selectOneMenu>
+					
+					<h:outputLabel value="#{msg.birthday}:" rendered="#{cadastroPessoaBean.pessoa.tipo eq 'FISICA'}" />
+					<h:inputText label="Data de Nascimento" value="#{cadastroPessoaBean.pessoa.dataDeNascimento}" rendered="#{cadastroPessoaBean.pessoa.tipo eq 'FISICA'}">
+						<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy"></f:convertDateTime>
+					</h:inputText>
+					
+					<h:commandButton styleClass="btn-lg btn btn-success" value="#{msg.save}" action="#{cadastroPessoaBean.salvar}">
+						<f:ajax execute="@form" render="@all"></f:ajax>
+					</h:commandButton>
+					<h:button value="#{msg.clean_fields}" styleClass="btn btn-sm btn-danger" outcome="cadastro_pessoa">
+					</h:button>
+				</h:panelGrid>	
+			</h:form>
+		</ui:define>
+</ui:composition>

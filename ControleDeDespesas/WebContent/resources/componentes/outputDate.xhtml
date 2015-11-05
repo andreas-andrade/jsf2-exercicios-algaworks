@@ -1,0 +1,19 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite">
+	
+	<composite:interface>
+		<composite:attribute name="pessoaBean" required="true"></composite:attribute>
+		<composite:attribute name="locale" default="pt_BR"></composite:attribute>
+		<composite:attribute name="pattern" default="dd/MM/yyyy"></composite:attribute>
+	</composite:interface>
+	
+	<composite:implementation>
+	<h:outputText value="#{cc.attrs.pessoaBean.dataDeNascimento}">
+		<f:convertDateTime pattern="#{cc.attrs.pattern}" locale="#{cc.attrs.locale}"></f:convertDateTime>
+	</h:outputText>
+</composite:implementation>
+</html>

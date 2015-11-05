@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GeraSenhaIWG2" default="all" basedir=".">
+
+    <!-- propriedades do projeto com os nomes dos diretórios -->
+
+    <target name="properties">
+        <echo> Ant deployGeraSenha. </echo>
+        <property name="src.dir" location="src" />
+        <!-- destino do jar para distribuição do cliente -->
+        <property name="dist.dir" value="${basedir}/dist" />
+        <property name="deploy.dir" value="c:/iwg2/bin" />
+    </target>
+
+    <!--
+    target init - target responsável por criar os diretórios classes, lib, doc e dist.
+    -->
+
+    <target name="init" depends="properties">
+        <echo> Criando os diretórios.</echo>
+        <mkdir dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}/bin"/>
+        <!-- Copiando arquivos do diretóro de compilação -->
+        <copy todir="${dist.dir}">
+            <!-- Arquivos de idioma/localização -->
+            <fileset dir="${src.dir}">
+                <include name="principal/**"/>
+                <include name="visao/**"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!--
+    target compile - target responsável por compilar o projeto separando os arquivos .class. 
+    -->
+
+    <target name="compile" depends="init">
+        <echo> Compilando o projeto.</echo>
+        <javac srcdir="${dist.dir}" destdir="${dist.dir}/bin" >
+        </javac>
+        <copy todir="${dist.dir}/bin">
+            <fileset dir="${src.dir}">
+                <include name="com/sismed/resources/**"/>
+            <!--exclude name="com/sismed/resources/*.java"/-->
+            </fileset>
+        </copy>
+    </target>
+
+    <!--
+    target dist - target responsável por gerar o .jar do projéto no diretório dist.
+    -->
+    
+    <target name="deploy" depends="compile">
+        <echo> Gerando o .jar do projeto.</echo> 
+        <jar jarfile="${deploy.dir}/GeraSenhaIWG2.jar" basedir="${dist.dir}/bin">
+            <!-- Tornando o jar executável -->
+            <manifest>
+                <attribute name="Main-Class" value="principal.GeraSenhaIWG2"/>
+                <attribute name="Class-Path" value="jcommon-1.0.0.jar"/>                
+                <attribute name="Specification-Vendor"   value="SISMED Sistemas Medicos Comercio e Industria"/>
+                <attribute name="Implementation-Version" value="build01"/>
+                <attribute name="Implementation-Vendor"  value="SISMED Sistemas Medicos Comercio e Industria"/>                 
+            </manifest>
+        </jar>
+        <delete dir="${dist.dir}" failonerror="false" />
+    </target>
+
+    <!--
+    target all - target responsável por iniciar o processo default e executar a aplicação.
+    -->
+
+    <target name="all" depends="deploy">
+    </target>
+
+</project>
+

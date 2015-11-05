@@ -1,0 +1,30 @@
+.container-tabela{
+	margin: 0 auto;
+	width: 1000px;
+}
+
+.navbar-brand{
+	
+}
+
+#img-nav{
+	padding: 5px;
+	vertical-align: top;
+	position: relative;
+	top: -11px;
+	width: 40px;
+	height: 40px;	
+}
+
+.conteudo{
+	padding-top: 100px;
+	
+}
+
+#div-jumb{
+	text-align: center;
+}
+
+#h-home{
+	margin-bottom: 20px;
+}

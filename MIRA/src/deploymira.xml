@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<project name="MIRA" basedir=".">
+	
+	<property name="src.dir" location="MIRA" />		
+	<property name="deploy.dir" value="C:/Arquivos de programas/Apache Software Foundation/Apache2.2/htdocs" />
+	
+	<echo>Copiando .htaccess</echo>
+	<copy file="${src.dir}/.htaccess" todir="${deploy.dir}" overwrite="true"/>
+		
+	<echo>Criando o diretório do projeto na pasta do Apache.</echo>    
+    <mkdir dir="${deploy.dir}/MIRA"/>	
+	
+	<!-- ===================================================================  --> 
+			
+	<echo>Copiando os arquivos do projeto MIRA...</echo>
+	
+	<!-- ===================================================================  -->
+	
+	<echo>Copiando arquivos estáticos...</echo>	
+	<copy todir="${deploy.dir}/MIRA/static/admin" overwrite="true">
+		<fileset dir="${src.dir}/admin">
+			<include name="**/*" />
+		</fileset>
+	</copy>
+	<copy todir="${deploy.dir}/MIRA/static/grappelli" overwrite="true">
+		<fileset dir="${src.dir}/grappelli">
+			<include name="**/*" />
+		</fileset>
+	</copy>
+	<copy todir="${deploy.dir}/MIRA/templates" overwrite="true">
+		<fileset dir="${src.dir}/templates">
+			<include name="**/*" />
+		</fileset>
+	</copy>
+		
+	<!-- ===================================================================  -->
+	
+	<echo>Copiando arquivos do projeto...</echo>	
+	
+	<copy todir="${deploy.dir}/MIRA/IWG2" overwrite="true">
+		<fileset dir="${src.dir}/IWG2">
+			<include name="**/*" />
+		</fileset>
+	</copy>
+	
+	<copy file="${src.dir}/__init__.py"        todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/local_settings.py"  todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/manage.py"          todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/settings.py"        todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/urls.py"            todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/wsgi.py"            todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/default.wsgi"       todir="${deploy.dir}/MIRA" overwrite="true"/>
+	<copy file="${src.dir}/__init__.pyc"       todir="${deploy.dir}/MIRA" overwrite="true"/>	
+	
+	<!-- ===================================================================  -->
+		
+	<echo>Fim da cópia dos arquivos.</echo>
+	
+</project>
